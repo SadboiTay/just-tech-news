@@ -84,13 +84,15 @@ router.post('/login', (req, res) => {
     }).then(dbUserData => {
         if (!dbUserData) {
             res.status(400).json({ message: 'No user with that email address!' });
+            // console.log('not finding user');
             return;
         }
 
         const validPassword = dbUserData.checkPassword(req.body.password);
 
         if (!validPassword) {
-            res.status(400).json({ message: 'Incorrect password!' });
+            // res.status(400).json({ message: 'Incorrect password!' });
+            console.log('saying invalid pw');
             return;
         }
 
@@ -109,7 +111,8 @@ router.post('/logout', (req, res) => {
         req.session.destroy(() => {
             res.status(204).end();
         });
-    } else {
+    }
+    else {
         res.status(404).end();
     }
 });
